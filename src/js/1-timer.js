@@ -37,8 +37,6 @@ const timerFields = {
   seconds: document.querySelector('[data-seconds]'),
 };
 
-startbtn.disabled = true;
-
 const options = {
   enableTime: true,
   time_24hr: true,
@@ -46,7 +44,6 @@ const options = {
   minuteIncrement: 1,
   onClose(selectedDates) {
     SelectedDate = selectedDates[0];
-
     if (SelectedDate <= new Date()) {
       iziToast.error({
         title: 'Error',
@@ -55,10 +52,13 @@ const options = {
         timeout: 3000,
       });
       startbtn.disabled = true;
-      startbtn.style.backgroundColor = '#cfcfcf';
     } else {
+      iziToast.success({
+        title: 'Success',
+        message: 'You have selected a valid date!',
+        position: 'topRight',
+      });
       startbtn.disabled = false;
-      startbtn.style.backgroundColor = '#a1a1a1';
     }
   },
 };
@@ -70,8 +70,7 @@ function updateTimer() {
   if (timeLeft <= 0) {
     clearInterval(downInterval);
     startbtn.disabled = false;
-    inputDatetimer.disabled = false;
-    startbtn.style.backgroundColor = '#4CAF50';
+    inputDatetime.disabled = false;
     return;
   }
 
